@@ -7,7 +7,6 @@ Instalation
 
     $ git clone git://github.com/pauloborges/goto.git
     $ cd goto && [sudo] python setup install
-    $ echo ". /path/to/goto/bin/goto.sh" >> ~/.bashrc
 
 
 goto
