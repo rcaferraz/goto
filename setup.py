@@ -51,7 +51,7 @@ class GotoInstall(install):
 
 def readme():
     directory,f = os.path.split(os.path.abspath(__file__))
-    return open(os.path.join(directory, 'README.md')).read()
+    return open(os.path.join(directory, 'README.rst')).read()
 
 
 setup(
