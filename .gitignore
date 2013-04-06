@@ -1,4 +1,5 @@
 MANIFEST
 dist/
 build/
+goto_dir.egg-info/
 *.pyc
