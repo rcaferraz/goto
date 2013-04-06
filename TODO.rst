@@ -18,13 +18,6 @@ print all labels and paths. It is not happening right now because I do not
 know how to add to argparse a "no argument" option.
 
 
-Make the installation fully automatic
--------------------------------------
-
-Currently, the user need to run three commands to install `goto`. This is a
-error prone approach. Merge all commands to `pip install goto-dir`.
-
-
 Write a man page
 ----------------
 
