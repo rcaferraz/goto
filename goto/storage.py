@@ -80,7 +80,7 @@ class Storage(object):
         Exception is raised.
         """
         if self.parser.has_option(self.labels_section, label):
-            raise Exception()
+            raise LabelAlreadyExistsError()
 
         self.replace(label, path)
 
@@ -89,3 +89,7 @@ class Storage(object):
         """Removes a label and it's path."""
         self.parser.remove_option(self.labels_section, label)
         self._persist()
+
+
+class LabelAlreadyExistsError(Exception):
+    pass

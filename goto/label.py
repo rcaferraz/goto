@@ -2,7 +2,7 @@
 import sys
 import os
 import argparse
-from storage import Storage
+from storage import Storage, LabelAlreadyExistsError
 
 
 storage = Storage()
@@ -36,7 +36,7 @@ def add(label, path):
     try:
         storage.add(label, path)
         print '%s label points to %s.' % (label, path)
-    except:
+    except LabelAlreadyExistsError:
         sys.stderr.write('%s label already exists. Use --replace.\n' % label)
         sys.exit(1)
 
