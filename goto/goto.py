@@ -16,6 +16,7 @@ def list_labels():
 def change_directory(label):
     try:
         path = storage.get(label)
+        print '<PATH>'
         print path
     except:
         sys.stderr.write('%s is not a valid label.\n' % label)
@@ -25,10 +26,13 @@ def change_directory(label):
 def main():
     """Entrypoint for the `goto` utility."""
     parser = argparse.ArgumentParser()
-    parser.add_argument('label', help='name of the label')
+    parser.add_argument('label', nargs='?', help='name of the label')
 
     args = parser.parse_args()
 
     storage.open_or_create()
 
-    change_directory(args.label)
+    if args.label:
+        change_directory(args.label)
+    else:
+        list_labels()
