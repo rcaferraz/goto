@@ -56,7 +56,6 @@ If the label already exists and points to another directory, an error is thrown:
 
 The replacement can be ensured by `--replace`:
 
-    { o diretório atual é /home/borges/workspace }
     /home/borges/my_new_workspace$ label --replace ws
     ws label now points to /home/borges/my_new_workspace.
 
