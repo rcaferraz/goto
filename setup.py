@@ -59,11 +59,26 @@ setup(
     version='0.1.0',
     author='Paulo Borges',
     author_email='pauloborgesfilho@gmail.com',
+
     packages=['goto','goto.test'],
     scripts=['bin/bootstrap_goto.py', 'bin/goto.sh'],
-    url='http://pypi.python.org/pypi/goto-dir/',
+
+    url='https://github.com/pauloborges/goto',
     license='See LICENSE.',
+
     description='easy\'n\'fast cd\'ing.',
     long_description=readme(),
+
+    classifiers=[
+        'Development Status :: 3 - Alpha',
+        'Environment :: Console',
+        'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
+        'Natural Language :: English',
+        'Programming Language :: Python :: 2.7',
+        'Topic :: System :: Shells',
+        'Intended Audience :: Developers',
+        'Intended Audience :: End Users/Desktop',
+    ],
+
     cmdclass={ 'install': GotoInstall },
 )
