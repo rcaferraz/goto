@@ -49,6 +49,11 @@ class GotoInstall(install):
         post_install()
 
 
+def readme():
+    directory,f = os.path.split(os.path.abspath(__file__))
+    return open(os.path.join(directory, 'README.md')).read()
+
+
 setup(
     name='goto-dir',
     version='0.1.0',
@@ -59,6 +64,6 @@ setup(
     url='http://pypi.python.org/pypi/goto-dir/',
     license='See LICENSE.',
     description='easy\'n\'fast cd\'ing.',
-    long_description=open('README.md').read(),
+    long_description=readme(),
     cmdclass={ 'install': GotoInstall },
 )
