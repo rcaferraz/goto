@@ -3,7 +3,7 @@ import os
 import re
 import commands
 from distutils.core import setup
-from distutils.command.install import install
+from setuptools.command.install import install
 
 
 HOME_DIRECTORY = os.path.expanduser("~")
