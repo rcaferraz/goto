@@ -44,20 +44,30 @@ def main():
     """Entrypoint for the `label` utility."""
     parser = argparse.ArgumentParser()
     group = parser.add_mutually_exclusive_group()
-    group.add_argument('--remove', action='store_true', help='remove an existing label')
-    group.add_argument('--replace', action='store_true', help='replace an existing label')
-    parser.add_argument('label', help='name of the label')
-
+    group.set_defaults(mode='insert')
+    group.add_argument('--remove', action='store_const', dest='mode',
+                            const='remove', help='remove an existing label')
+    group.add_argument('--replace', action='store_const', dest='mode',
+                            const='replace', help='replace an existing label')
+    group.add_argument('--insert', action='store_const', dest='mode',
+                                    const='insert', help='insert a new label')
+    parser.add_argument('label', nargs='?', help='name of the label')
     args = parser.parse_args()
+
+    if not args.label and args.mode in ['remove', 'replace']:
+        parser.error('can\'t %s without specify a label.' % args.mode)
 
     curr_dir = os.getcwd()
     storage.open_or_create()
 
-    if args.remove:
+    if args.mode == 'remove':
         remove(args.label)
 
-    elif args.replace:
+    elif args.mode == 'replace':
         replace(args.label, curr_dir)
 
     else:
+        if not args.label:
+            args.label = curr_dir[curr_dir.rfind('/')+1:]
+
         add(args.label, curr_dir)
