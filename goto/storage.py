@@ -9,6 +9,7 @@ LABEL_STORAGE_FILE = '.goto'
 LABEL_STORAGE_PATH = os.path.join(HOME_DIRECTORY, LABEL_STORAGE_FILE)
 LABELS_SECTION = u'labels'
 
+LABEL_SIZE = 32
 
 class Storage(object):
     def __init__(self, file_name=LABEL_STORAGE_PATH, labels_section=LABELS_SECTION):
@@ -70,6 +71,9 @@ class Storage(object):
         """
         Replaces the path from a label. The label is created if it not exists.
         """
+        if len(label) > LABEL_SIZE:
+            raise LabelTooLongError()
+
         self.parser.set(self.labels_section, label, path)
         self._persist()
 
@@ -92,4 +96,7 @@ class Storage(object):
 
 
 class LabelAlreadyExistsError(Exception):
+    pass
+
+class LabelTooLongError(Exception):
     pass

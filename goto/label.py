@@ -2,7 +2,7 @@
 import sys
 import os
 import argparse
-from storage import Storage, LabelAlreadyExistsError
+from storage import Storage, LabelAlreadyExistsError, LabelTooLongError, LABEL_SIZE
 
 
 storage = Storage()
@@ -27,8 +27,9 @@ def replace(label, path):
     try:
         storage.replace(label, path)
         print '%s label now points to %s.' % (label, path)
-    except:
-        sys.stderr.write('%s is not a valid label.\n' % label)
+    except LabelTooLongError:
+        sys.stderr.write('%s is too long. The size limit is %d characters.\n'
+                                                        % (label, LABEL_SIZE))
         sys.exit(1)
 
 
@@ -38,6 +39,10 @@ def add(label, path):
         print '%s label points to %s.' % (label, path)
     except LabelAlreadyExistsError:
         sys.stderr.write('%s label already exists. Use --replace.\n' % label)
+        sys.exit(1)
+    except LabelTooLongError:
+        sys.stderr.write('%s is too long. The size limit is %d characters.\n'
+                                                        % (label, LABEL_SIZE))
         sys.exit(1)
 
 
