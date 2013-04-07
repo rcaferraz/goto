@@ -1,11 +1,13 @@
 # coding: utf-8
 import sys
 import os
+import locale
 import argparse
 from storage import Storage, LabelAlreadyExistsError, LabelTooLongError, LabelInvalidFormatError, LABEL_SIZE
 
 
 storage = Storage()
+language, encoding = locale.getdefaultlocale()
 
 
 def delete(label):
@@ -63,7 +65,10 @@ def main():
     if not args.label and args.mode in ['delete', 'replace']:
         parser.error('can\'t %s without specify a label.' % args.mode)
 
-    curr_dir = os.getcwd()
+    curr_dir = unicode(os.getcwd(), encoding)
+    if args.label:
+        args.label = unicode(args.label, encoding)
+
     storage.open_or_create()
 
     if args.mode == 'delete':
