@@ -10,14 +10,6 @@ Write tests!
 Self-explanatory.
 
 
-Add "no argument" option to both label and goto cli
----------------------------------------------------
-
-The expected result of a call to `label` or `goto` without arguments is to
-print all labels and paths. It is not happening right now because I do not
-know how to add to argparse a "no argument" option.
-
-
 Write a man page
 ----------------
 
