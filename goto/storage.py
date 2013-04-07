@@ -1,5 +1,6 @@
 # coding: utf-8
 import os
+import re
 import codecs
 from ConfigParser import SafeConfigParser
 
@@ -10,6 +11,9 @@ LABEL_STORAGE_PATH = os.path.join(HOME_DIRECTORY, LABEL_STORAGE_FILE)
 LABELS_SECTION = u'labels'
 
 LABEL_SIZE = 32
+
+LABEL_RE = re.compile(r'^[^\s/]+$', re.UNICODE)
+
 
 class Storage(object):
     def __init__(self, file_name=LABEL_STORAGE_PATH, labels_section=LABELS_SECTION):
@@ -74,6 +78,9 @@ class Storage(object):
         if len(label) > LABEL_SIZE:
             raise LabelTooLongError()
 
+        if not LABEL_RE.match(label):
+            raise LabelInvalidFormatError()
+
         self.parser.set(self.labels_section, label, path)
         self._persist()
 
@@ -99,4 +106,7 @@ class LabelAlreadyExistsError(Exception):
     pass
 
 class LabelTooLongError(Exception):
+    pass
+
+class LabelInvalidFormatError(Exception):
     pass
