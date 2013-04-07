@@ -60,19 +60,19 @@ If the label already exists and points to another directory, an error is thrown:
     /home/borges/workspace$ label ws
     ws label already exists. Use --replace.
 
-The replacement can be ensured by `--replace`::
+The replacement can be ensured by `-r|--replace`::
 
-    /home/borges/my_new_workspace$ label --replace ws
+    /home/borges/my_new_workspace$ label -r ws
     ws label now points to /home/borges/my_new_workspace.
 
-You can delete a label using `--delete`::
+You can delete a label using `-d|--delete`::
 
-    $ label --delete docs
+    $ label -d docs
     docs label was deleted.
 
 But if the label does not exists::
 
-    $ label --delete connman
+    $ label -d connman
     connman is not a valid label.
 
 
