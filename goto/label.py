@@ -2,7 +2,7 @@
 import sys
 import os
 import argparse
-from storage import Storage, LabelAlreadyExistsError, LabelTooLongError, LABEL_SIZE
+from storage import Storage, LabelAlreadyExistsError, LabelTooLongError, LabelInvalidFormatError, LABEL_SIZE
 
 
 storage = Storage()
@@ -24,7 +24,10 @@ def replace(label, path):
     except LabelTooLongError:
         sys.stderr.write('%s is too long. The size limit is %d characters.\n'
                                                         % (label, LABEL_SIZE))
-        sys.exit(1)
+    except LabelInvalidFormatError:
+        sys.stderr.write('%s is not a valid label.\n' % label)
+
+    sys.exit(1)
 
 
 def add(label, path):
@@ -37,7 +40,10 @@ def add(label, path):
     except LabelTooLongError:
         sys.stderr.write('%s is too long. The size limit is %d characters.\n'
                                                         % (label, LABEL_SIZE))
-        sys.exit(1)
+    except LabelInvalidFormatError:
+        sys.stderr.write('%s is not a valid label.\n' % label)
+
+    sys.exit(1)
 
 
 def main():
