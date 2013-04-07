@@ -25,6 +25,11 @@ def post_install():
 
     source_line = ". %s\n" % goto_sh_path
 
+    if not os.path.isfile(BASHRC_PATH):
+        print ('%s does not exist. Please append "%s" into your shell init'
+            'script.' % (BASHRC_PATH, source_line))
+        return
+
     with open(BASHRC_PATH, 'r') as f:
         lines = f.readlines()
 
