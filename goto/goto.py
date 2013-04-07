@@ -1,16 +1,20 @@
 # coding: utf-8
 import sys
 import argparse
-from storage import Storage
+from storage import Storage, LABEL_SIZE
 
 
 storage = Storage()
 
 
+def format_label(label):
+    return label + (LABEL_SIZE - len(label)) * ' '
+
+
 def list_labels():
     labels = storage.get_all()
     for label, path in labels.iteritems():
-        print label, '\t\t', path
+        print format_label(label), '\t', path
 
 
 def change_directory(label):
