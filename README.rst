@@ -45,17 +45,15 @@ label
 
 The `label` command is used to save shortcuts to directories.
 
-Using it without parameters returns a list of all currently labels (same as `goto`)::
-
-    $ label
-    home    /home/borges
-    ws      /home/borges/workspace
-    docs    /home/borges/Documents
-
 When you pass a simple string, the current directory is saved::
 
     /home/borges/Downloads$ label downloads
     downloads label points to /home/borges/Downloads.
+
+Using it without parameters saves the current directory using the inner folder as label::
+
+    /path/to/something$ label
+    something label points to /path/to/something.
 
 If the label already exists and points to another directory, an error is thrown::
 
