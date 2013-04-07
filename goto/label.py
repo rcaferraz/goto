@@ -8,10 +8,10 @@ from storage import Storage, LabelAlreadyExistsError, LabelTooLongError, LABEL_S
 storage = Storage()
 
 
-def remove(label):
+def delete(label):
     try:
         storage.remove(label)
-        print '%s label was removed.' % label
+        print '%s label was deleted.' % label
     except:
         sys.stderr.write('%s is not a valid label.\n' % label)
         sys.exit(1)
@@ -45,8 +45,8 @@ def main():
     parser = argparse.ArgumentParser()
     group = parser.add_mutually_exclusive_group()
     group.set_defaults(mode='insert')
-    group.add_argument('--remove', action='store_const', dest='mode',
-                            const='remove', help='remove an existing label')
+    group.add_argument('--delete', action='store_const', dest='mode',
+                            const='delete', help='delete an existing label')
     group.add_argument('--replace', action='store_const', dest='mode',
                             const='replace', help='replace an existing label')
     group.add_argument('--insert', action='store_const', dest='mode',
@@ -54,14 +54,14 @@ def main():
     parser.add_argument('label', nargs='?', help='name of the label')
     args = parser.parse_args()
 
-    if not args.label and args.mode in ['remove', 'replace']:
+    if not args.label and args.mode in ['delete', 'replace']:
         parser.error('can\'t %s without specify a label.' % args.mode)
 
     curr_dir = os.getcwd()
     storage.open_or_create()
 
-    if args.mode == 'remove':
-        remove(args.label)
+    if args.mode == 'delete':
+        delete(args.label)
 
     elif args.mode == 'replace':
         replace(args.label, curr_dir)
