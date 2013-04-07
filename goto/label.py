@@ -8,12 +8,6 @@ from storage import Storage, LabelAlreadyExistsError, LabelTooLongError, LABEL_S
 storage = Storage()
 
 
-def list_labels():
-    labels = storage.get_all()
-    for label, path in labels.iteritems():
-        print label, '\t\t', path
-
-
 def remove(label):
     try:
         storage.remove(label)
@@ -58,9 +52,6 @@ def main():
 
     curr_dir = os.getcwd()
     storage.open_or_create()
-
-    #if args.list:           #FIXME insert this argument [and s/if/elif in next case]
-    #    list_labels()
 
     if args.remove:
         remove(args.label)
