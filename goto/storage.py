@@ -2,7 +2,7 @@
 import os
 import re
 import codecs
-from ConfigParser import SafeConfigParser
+from configparser import UnicodeConfigParser, NoOptionError
 
 
 HOME_DIRECTORY = os.path.expanduser("~")
@@ -17,7 +17,7 @@ LABEL_RE = re.compile(r'^[^\s/]+$', re.UNICODE)
 
 class Storage(object):
     def __init__(self, file_name=LABEL_STORAGE_PATH, labels_section=LABELS_SECTION):
-        self.parser = SafeConfigParser()
+        self.parser = UnicodeConfigParser()
         self.file_name = file_name
         self.labels_section = labels_section
 
