@@ -45,11 +45,11 @@ def main():
     parser = argparse.ArgumentParser()
     group = parser.add_mutually_exclusive_group()
     group.set_defaults(mode='insert')
-    group.add_argument('--delete', action='store_const', dest='mode',
+    group.add_argument('-d', '--delete', action='store_const', dest='mode',
                             const='delete', help='delete an existing label')
-    group.add_argument('--replace', action='store_const', dest='mode',
+    group.add_argument('-r', '--replace', action='store_const', dest='mode',
                             const='replace', help='replace an existing label')
-    group.add_argument('--insert', action='store_const', dest='mode',
+    group.add_argument('-i', '--insert', action='store_const', dest='mode',
                                     const='insert', help='insert a new label')
     parser.add_argument('label', nargs='?', help='name of the label')
     args = parser.parse_args()
