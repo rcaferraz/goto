@@ -18,7 +18,7 @@ goto() {
 
         if [ "$DIR" == "<PATH>" ]; then
             DIR=$(sed -n '2p' /tmp/goto)
-            goto_dir $DIR
+            goto_dir "$DIR"
         else
             cat /tmp/goto
         fi
