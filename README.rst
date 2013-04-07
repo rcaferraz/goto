@@ -65,14 +65,14 @@ The replacement can be ensured by `--replace`::
     /home/borges/my_new_workspace$ label --replace ws
     ws label now points to /home/borges/my_new_workspace.
 
-You can remove a label using `--remove`::
+You can delete a label using `--delete`::
 
-    $ label --remove docs
-    docs label was removed.
+    $ label --delete docs
+    docs label was deleted.
 
 But if the label does not exists::
 
-    $ label --remove connman
+    $ label --delete connman
     connman is not a valid label.
 
 
