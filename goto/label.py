@@ -1,6 +1,7 @@
 # coding: utf-8
 import sys
 import os
+import re
 import locale
 import argparse
 from storage import Storage, LabelAlreadyExistsError, LabelTooLongError, LabelInvalidFormatError, LABEL_SIZE
@@ -80,5 +81,6 @@ def main():
     else:
         if not args.label:
             args.label = curr_dir[curr_dir.rfind('/')+1:]
+            args.label = re.sub(r'\s+', '_', args.label, flags=re.UNICODE)
 
         add(args.label, curr_dir)
