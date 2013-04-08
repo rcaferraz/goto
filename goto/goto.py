@@ -1,4 +1,5 @@
 # coding: utf-8
+import os
 import sys
 import locale
 import argparse
@@ -23,10 +24,17 @@ def list_labels():
 def change_directory(label):
     try:
         path = storage.get(label)
+        if not os.path.isdir(path):
+            raise DanglingLabelError()
         print '<PATH>'
         print path.encode(encoding)
     except NoOptionError:
         sys.stderr.write('%s is not a valid label.\n' % label)
+        sys.exit(1)
+    except DanglingLabelError:
+        storage.remove(label)
+        sys.stderr.write('%s is not a valid path. label %s was removed.\n' %
+            (path, label))
         sys.exit(1)
 
 
@@ -44,3 +52,7 @@ def main():
         change_directory(label)
     else:
         list_labels()
+
+
+class DanglingLabelError(Exception):
+    pass
