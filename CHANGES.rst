@@ -25,6 +25,8 @@ current/unstable
 
 * Auto remove "dangling" label when the user tries to goto to it.
 
+* Application is now compatible with Mac OS
+
 v0.1.1
 ------
 
