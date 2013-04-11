@@ -26,11 +26,15 @@ def change_directory(label):
         path = storage.get(label)
         if not os.path.isdir(path):
             raise DanglingLabelError()
-        print '<PATH>'
-        print path.encode(encoding)
+
+        with open('/tmp/goto', 'w') as f:
+            f.write('<PATH>\n')
+            f.write(path.encode(encoding) + '\n')
+
     except NoOptionError:
         sys.stderr.write('%s is not a valid label.\n' % label)
         sys.exit(1)
+
     except DanglingLabelError:
         storage.remove(label)
         sys.stderr.write('%s is not a valid path. label %s was removed.\n' %

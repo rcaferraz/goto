@@ -11,21 +11,18 @@ label() {
 
 goto() {
     ARGS="$@"
-    bootstrap_goto.py goto $ARGS > /tmp/goto
+    bootstrap_goto.py goto $ARGS
 
     if [ "$?" = "0" ]; then
-        DIR=$(head -1 /tmp/goto)
+        if [ -f /tmp/goto ]; then
+            DIR=$(head -1 /tmp/goto)
 
-        if [ "$DIR" == "<PATH>" ]; then
-            DIR=$(sed -n '2p' /tmp/goto)
-            goto_dir "$DIR"
-        else
-            cat /tmp/goto
+            if [ "$DIR" == "<PATH>" ]; then
+                DIR=$(sed -n '2p' /tmp/goto)
+                goto_dir "$DIR"
+            fi
+
+            rm /tmp/goto
         fi
-
-    else
-        cat /tmp/goto
     fi
-
-    rm /tmp/goto
 }
