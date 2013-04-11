@@ -7,14 +7,13 @@ Tired of typing a lot to get where the fun is happening? `goto` was made for you
 Instalation
 -----------
 
-Method 1::
+Stable version (v0.2.0)::
 
-    $ pip install goto-dir
+    $ [sudo] pip install goto-dir
 
-Method 2::
+Unstable version::
 
-    $ git clone git://github.com/pauloborges/goto.git
-    $ cd goto && [sudo] python setup install
+    $ [sudo] pip install git+git://github.com/pauloborges/goto.git
 
 
 goto
