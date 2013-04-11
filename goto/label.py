@@ -61,12 +61,17 @@ def main():
     group.add_argument('-i', '--insert', action='store_const', dest='mode',
                                     const='insert', help='insert a new label')
     parser.add_argument('label', nargs='?', help='name of the label')
+    parser.add_argument('path', nargs='?', help='path to the directory')
     args = parser.parse_args()
 
     if not args.label and args.mode in ['delete', 'replace']:
         parser.error('can\'t %s without specify a label.' % args.mode)
 
-    curr_dir = unicode(os.getcwd(), encoding)
+    if args.path:
+        path = unicode(args.path, encoding)
+    else:
+        path = unicode(os.getcwd(), encoding)
+
     if args.label:
         args.label = unicode(args.label, encoding)
 
@@ -76,11 +81,11 @@ def main():
         delete(args.label)
 
     elif args.mode == 'replace':
-        replace(args.label, curr_dir)
+        replace(args.label, path)
 
     else:
         if not args.label:
             args.label = curr_dir[curr_dir.rfind('/')+1:]
             args.label = re.sub(r'\s+', '_', args.label, flags=re.UNICODE)
 
-        add(args.label, curr_dir)
+        add(args.label, path)
