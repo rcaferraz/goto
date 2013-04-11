@@ -1,6 +1,9 @@
 current/unstable
 ----------------
 
+v0.2.0
+------
+
 * `goto` without arguments shows all existing labels and paths
 
 * `label` without arguments insert the current path with his inner folder as label

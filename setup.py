@@ -63,7 +63,7 @@ def readme():
 
 setup(
     name='goto-dir',
-    version='0.1.2-dev',
+    version='0.2.0',
     author='Paulo Borges',
     author_email='pauloborgesfilho@gmail.com',
 
