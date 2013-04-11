@@ -73,19 +73,20 @@ def main():
         path = unicode(os.getcwd(), encoding)
 
     if args.label:
-        args.label = unicode(args.label, encoding)
+        label = unicode(args.label, encoding)
+    else:
+        label = None
 
     storage.open_or_create()
 
     if args.mode == 'delete':
-        delete(args.label)
+        delete(label)
 
     elif args.mode == 'replace':
-        replace(args.label, path)
+        replace(label, path)
 
     else:
-        if not args.label:
-            args.label = curr_dir[curr_dir.rfind('/')+1:]
-            args.label = re.sub(r'\s+', '_', args.label, flags=re.UNICODE)
+        if not label:
+            label = re.sub(r'\s+', '_', path[path.rfind('/')+1:], flags=re.UNICODE)
 
-        add(args.label, path)
+        add(label, path)
