@@ -1,18 +1,12 @@
 #!/usr/bin/env python
 import sys
-from goto import core
-from goto import label
+from goto import dispatcher
 
 
 def bootstrap():
     # Remove bootstrap-like string from argv
     del sys.argv[0]
-
-    if 'label' in sys.argv[0]:
-        return label.main()
-    elif 'goto' in sys.argv[0]:
-        return core.main()
-    sys.exit(-1)
+    dispatcher.main()
 
 
 if __name__ == '__main__':

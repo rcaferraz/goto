@@ -1,92 +1,75 @@
 # coding: utf-8
-import sys
 import os
 import re
 import locale
-import argparse
-from storage import Storage, LabelAlreadyExistsError, LabelTooLongError, LabelInvalidFormatError, LABEL_SIZE
+import core
+from exception import warning_and_exit
+from storage import Storage, LabelAlreadyExistsError, LabelTooLongError
+from storage import LabelInvalidFormatError, LABEL_SIZE
 
 
+lang, enc = locale.getdefaultlocale()
 storage = Storage()
-language, encoding = locale.getdefaultlocale()
+storage.open_or_create()
 
 
 def delete(label):
     try:
         storage.remove(label)
-        print '%s label was deleted.' % label
+        print "%s label was deleted." % label
     except:
-        sys.stderr.write('%s is not a valid label.\n' % label)
-        sys.exit(1)
+        warning_and_exit("%s is not a valid label." % label)
 
 
 def replace(label, path):
     try:
         storage.replace(label, path)
-        print '%s label now points to %s.' % (label, path)
+        print "%s label now points to %s." % (label, path)
     except LabelTooLongError:
-        sys.stderr.write('%s is too long. The size limit is %d characters.\n'
+        warning_and_exit("%s is too long. The maximum length is %d."
                                                         % (label, LABEL_SIZE))
     except LabelInvalidFormatError:
-        sys.stderr.write('%s is not a valid label.\n' % label)
-
-    sys.exit(1)
+        warning_and_exit("%s is not a valid label." % label)
 
 
 def add(label, path):
+    """"""
     try:
         storage.add(label, path)
-        print '%s label points to %s.' % (label, path)
+        print "%s label points to %s." % (label, path)
     except LabelAlreadyExistsError:
-        sys.stderr.write('%s label already exists. Use --replace.\n' % label)
-        sys.exit(1)
+        warning_and_exit("%s label already exists. Use update instead of add."
+                                                                    % label)
     except LabelTooLongError:
-        sys.stderr.write('%s is too long. The size limit is %d characters.\n'
+        warning_and_exit("%s is too long. The maximum length is %d."
                                                         % (label, LABEL_SIZE))
     except LabelInvalidFormatError:
-        sys.stderr.write('%s is not a valid label.\n' % label)
-
-    sys.exit(1)
+        warning_and_exit("%s is not a valid label." % label)
 
 
-def main():
-    """Entrypoint for the `label` utility."""
-    parser = argparse.ArgumentParser()
-    group = parser.add_mutually_exclusive_group()
-    group.set_defaults(mode='insert')
-    group.add_argument('-d', '--delete', action='store_const', dest='mode',
-                            const='delete', help='delete an existing label')
-    group.add_argument('-r', '--replace', action='store_const', dest='mode',
-                            const='replace', help='replace an existing label')
-    group.add_argument('-i', '--insert', action='store_const', dest='mode',
-                                    const='insert', help='insert a new label')
-    parser.add_argument('label', nargs='?', help='name of the label')
-    parser.add_argument('path', nargs='?', help='path to the directory')
-    args = parser.parse_args()
+def dispatch(action, label, path):
+    """"""
+    if not label and action in ["rm", "update"]:
+        core.print_help(True, "can't %s without specify a label." % action)
 
-    if not args.label and args.mode in ['delete', 'replace']:
-        parser.error('can\'t %s without specify a label.' % args.mode)
-
-    if args.path:
-        path = unicode(args.path, encoding)
+    if path:
+        path = unicode(path, enc)
     else:
-        path = unicode(os.getcwd(), encoding)
+        path = unicode(os.getcwd(), enc)
 
-    if args.label:
-        label = unicode(args.label, encoding)
+    if label:
+        label = unicode(label, enc)
     else:
-        label = None
+        # Since the first if verifies if there is a label when the action is
+        # "rm" or "update", so the only time this is executed is when action
+        # is "add".
+        label = re.sub(r'\s+', '_', path[path.rfind('/')+1:], flags=re.UNICODE)
 
-    storage.open_or_create()
-
-    if args.mode == 'delete':
+    if action == "rm":
         delete(label)
 
-    elif args.mode == 'replace':
+    elif action == "update":
         replace(label, path)
 
-    else:
-        if not label:
-            label = re.sub(r'\s+', '_', path[path.rfind('/')+1:], flags=re.UNICODE)
-
+    elif action == "add":
         add(label, path)

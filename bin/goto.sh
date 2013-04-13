@@ -6,7 +6,7 @@ goto_dir() {
 
 label() {
     ARGS="$@"
-    bootstrap_goto.py label $ARGS
+    bootstrap_goto.py goto label $ARGS
 }
 
 goto() {

@@ -1,14 +1,25 @@
 # coding: utf-8
-import argparse
-import goto
+import sys
+from goto import get_version
+from exception import warning_and_exit
 
 
-def main():
-    """Entrypoint for the `goto` utility."""
-    parser = argparse.ArgumentParser()
-    parser.add_argument('label', nargs='?', help='name of the label')
+def print_help(error=False, msg=None):
+    """"""
+    if error:
+        f = sys.stderr
+        status = -1
+    else:
+        f = sys.stdout
+        status = 0
 
-    args = parser.parse_args()
+    if msg:
+        f.write(msg + '\n')
+    f.write("TODO WRITE HELP!" + '\n')
+    sys.exit(status)
 
-    label = args.label or None
-    goto.dispatch(args.label)
+
+def print_version():
+    """"""
+    print "goto version %s." % get_version()
+    sys.exit(0)
