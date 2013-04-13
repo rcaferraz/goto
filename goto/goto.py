@@ -3,59 +3,53 @@ import os
 import sys
 import locale
 import argparse
+import comm
+from exception import warning_and_exit
 from storage import Storage, NoOptionError, LABEL_SIZE
 
 
+lang, enc = locale.getdefaultlocale()
 storage = Storage()
-language, encoding = locale.getdefaultlocale()
+storage.open_or_create()
 
 
 def format_label(label):
     return label + (LABEL_SIZE - len(label)) * u' '
 
 
-def list_labels():
+def list_all_labels():
+    """Prints all labels and its associated paths."""
     labels = storage.get_all()
     for label, path in labels.iteritems():
-        s = u'%s  %s' % (format_label(label), path)
-        print s.encode(encoding)
+        s = u'%s %s' % (format_label(label), path)
+        print s.encode(enc)
 
 
 def change_directory(label):
+    """Writes into the exchange file the path to goto."""
     try:
         path = storage.get(label)
         if not os.path.isdir(path):
             raise DanglingLabelError()
 
-        with open('/tmp/goto', 'w') as f:
-            f.write('<PATH>\n')
-            f.write(path.encode(encoding) + '\n')
+        comm.send(comm.PATH, path, enc)
 
     except NoOptionError:
-        sys.stderr.write('%s is not a valid label.\n' % label)
-        sys.exit(1)
+        warning_and_exit('%s is not a valid label.' % label)
 
     except DanglingLabelError:
         storage.remove(label)
-        sys.stderr.write('%s is not a valid path. label %s was removed.\n' %
-            (path, label))
-        sys.exit(1)
+        warning_and_exit('%s is not a valid path. label %s was removed.'
+            % (path, label))
 
 
-def main():
-    """Entrypoint for the `goto` utility."""
-    parser = argparse.ArgumentParser()
-    parser.add_argument('label', nargs='?', help='name of the label')
-
-    args = parser.parse_args()
-
-    storage.open_or_create()
-
-    if args.label:
-        label = unicode(args.label, encoding)
+def dispatch(label):
+    """"""
+    if label:
+        label = unicode(label, enc)
         change_directory(label)
     else:
-        list_labels()
+        list_all_labels()
 
 
 class DanglingLabelError(Exception):

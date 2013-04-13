@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import sys
-from goto import label_main, goto_main
+from goto import core
+from goto import label
 
 
 def bootstrap():
@@ -8,9 +9,9 @@ def bootstrap():
     del sys.argv[0]
 
     if 'label' in sys.argv[0]:
-        return label_main()
+        return label.main()
     elif 'goto' in sys.argv[0]:
-        return goto_main()
+        return core.main()
     sys.exit(-1)
 
 
