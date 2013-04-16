@@ -32,7 +32,9 @@ def change_directory(label):
             f.write(path.encode(encoding) + '\n')
 
     except NoOptionError:
-        sys.stderr.write('%s is not a valid label.\n' % label)
+	red = '\033[01;31m'
+	native = '\033[m'
+        sys.stderr.write(red + '%s' % label + native + ' is not a valid label.\n')
         sys.exit(1)
 
     except DanglingLabelError:
