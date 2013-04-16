@@ -1,0 +1,60 @@
+This is a how-to about building your own version of goto and running it, without the need of installing it in your system everytime you do a modification.
+
+First of all, do your modifications on goto code, then go to the root directory of the project and run the following command:
+	python setup.py build
+
+This will create a directory called build/ under your working directory.
+
+Now enter this directory through 'cd build' and see what's inside:
+
+build/
+├── lib.linux-x86_64-2.7
+│   └── goto
+│       ├── configparser.py
+│       ├── goto.py
+│       ├── __init__.py
+│       ├── label.py
+│       ├── storage.py
+│       └── test
+│           └── __init__.py
+└── scripts-2.7
+    ├── bootstrap_goto.py
+    └── goto.sh
+
+
+The next step is to copy the folder build/lib.linux-x86_64-2.7/goto into the folder build/scripts-2.7/. This can be done with the following command, while in build/ folder:
+
+cp -r lib.linux-x86_64-2.7/goto/ scripts-2.7/
+
+The tree will now look like this:
+
+.
+├── lib.linux-x86_64-2.7
+│   └── goto
+│       ├── configparser.py
+│       ├── goto.py
+│       ├── __init__.py
+│       ├── label.py
+│       ├── storage.py
+│       └── test
+│           └── __init__.py
+└── scripts-2.7
+    ├── bootstrap_goto.py
+    ├── goto
+    │   ├── configparser.py
+    │   ├── goto.py
+    │   ├── __init__.py
+    │   ├── label.py
+    │   ├── storage.py
+    │   └── test
+    │       └── __init__.py
+    └── goto.sh
+
+Finally, go to scripts-2.7/ folder and start using your hacked version of goto. To do that, you must precede all your goto commands with ./bootstrap_goto.py
+
+Here are some examples:
+
+./bootstrap_goto.py goto
+./bootstrap_goto.py goto --help
+
+Happy hacking!
