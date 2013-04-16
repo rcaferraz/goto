@@ -63,11 +63,7 @@ def readme():
 
 setup(
     name='goto-dir',
-<<<<<<< HEAD
-    version='0.2.0',
-=======
     version='0.2.1a',
->>>>>>> 1c13d68... Add get_version function to goto package
     author='Paulo Borges',
     author_email='pauloborgesfilho@gmail.com',
 
