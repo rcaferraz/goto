@@ -32,8 +32,8 @@ def change_directory(label):
             f.write(path.encode(encoding) + '\n')
 
     except NoOptionError:
-	red = '\033[01;31m'
-	native = '\033[m'
+        red = '\033[01;31m'
+        native = '\033[m'
         sys.stderr.write(red + '%s' % label + native + ' is not a valid label.\n')
         sys.exit(1)
 
